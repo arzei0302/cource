@@ -42,32 +42,3 @@ class CommentView(ModelViewSet):
 class PublicationView(ModelViewSet):
     queryset = Publication.objects.all()                   
     serializer_class = PublicationSerializer
-
-
-
-def create_comment(request):
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.save()
-            return redirect('comment_success')
-    else:
-        form = CommentForm()
-    
-    return {'form': form}
-
-def create_publication(request):
-    if request.method == 'POST':
-        form = PublicationForm(request.POST, request.FILES)
-        if form.is_valid():
-            publication = form.save(commit=False)
-            publication.user = request.user
-            publication.save()
-            return redirect('publication_success')
-    else:
-        form = PublicationForm()
-
-    return {'form': form}
-
